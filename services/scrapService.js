@@ -7,7 +7,7 @@ export const fetchScrapData = async (fetchFirstPage, fetchSecondPage) => {
         const data1 = await getDataFromPage(
             'https://betplay.com.co/apuestas#sports-hub/basketball/nba',
             'div.KambiBC-event-participants__name.KambiBC-event-participants__name--team-logo',
-            'div.sc-kAyceB.dwQxLC'
+            'div.sc-gsFSXq.fPgCRz'
         );
         results.push(...data1.map(data => ({ firstPageData: data })));
     }

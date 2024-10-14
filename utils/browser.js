@@ -8,9 +8,9 @@ export const launchBrowser = async () => {
     if (os.platform() === 'darwin') {
         executablePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
         userDataDir = '/Users/tu_usuario/Library/Application Support/Google/Chrome/Default';
-    } else if (os.platform() === 'win32') { 
-        executablePath = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe';  
-        userDataDir = 'C:\\Users\\hanne\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default'; 
+    } else if (os.platform() === 'win32') {
+        executablePath = 'C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe';
+        userDataDir = 'C:\\Users\\hanne\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Default';
     } else {
         throw new Error('Sistema operativo no compatible.');
     }
@@ -32,6 +32,12 @@ export const extractDataFromPage = async (page, url, teamSelector, quotaSelector
         const quotaElements = document.querySelectorAll(quotaSelector);
         const teams = Array.from(teamsElements).map(element => element.innerText);
         const quotas = Array.from(quotaElements).map(element => element.innerText);
-        return teams.map((team, i) => ({ team, quota: quotas[i] }));
+
+        const filteredQuotas = [];
+        for (let i = 0; i < quotas.length; i += 6) {
+            filteredQuotas.push(quotas[i], quotas[i + 1]);
+        }
+
+        return teams.map((team, i) => ({ team, quota: filteredQuotas[i] }));
     }, teamSelector, quotaSelector);
 };
